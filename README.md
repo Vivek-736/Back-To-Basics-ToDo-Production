@@ -234,8 +234,5 @@ All task endpoints require an authenticated user Bearer token: `Authorization: B
 ---
 
 <p align="center">
-  <sub>Built with precision and passion for high-performance productivity.</sub><br>
-  <strong>Stay focused. Stay consistent. Get things done. 🚀</strong><br><br>
   <sub>Made with passion by <strong>Vivek</strong> ❤️</sub>
 </p>
-
