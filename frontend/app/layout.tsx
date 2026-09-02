@@ -1,6 +1,7 @@
+import "./globals.css";
 import type { Metadata, Viewport } from "next";
 import { Roboto_Condensed } from "next/font/google";
-import "./globals.css";
+import ThemeClerkProvider from "@/components/ThemeClerkProvider";
 
 const robotoCondensed = Roboto_Condensed({
   subsets: ["latin"],
@@ -13,7 +14,8 @@ export const metadata: Metadata = {
     default: "TaskPulse — Production Task & Workflow Management",
     template: "%s | TaskPulse",
   },
-  description: "A high-performance, enterprise-grade to-do and workflow management application engineered with Next.js and NestJS.",
+  description:
+    "A high-performance, enterprise-grade to-do and workflow management application engineered with Next.js and NestJS.",
   applicationName: "TaskPulse",
   authors: [{ name: "TaskPulse Team" }],
   creator: "TaskPulse",
@@ -87,11 +89,29 @@ export default function RootLayout({
   return (
     <html
       lang="en"
-      className={`${robotoCondensed.className} h-full antialiased`}
+      className={`${robotoCondensed.className} h-full antialiased dark`}
       suppressHydrationWarning
     >
-      <body className="min-h-full flex flex-col">
-        {children}
+      <head>
+        <script
+          dangerouslySetInnerHTML={{
+            __html: `(function(){
+              try {
+                var t = localStorage.getItem('taskpulse_theme');
+                if (t === 'light') {
+                  document.documentElement.classList.add('light');
+                  document.documentElement.classList.remove('dark');
+                } else {
+                  document.documentElement.classList.add('dark');
+                  document.documentElement.classList.remove('light');
+                }
+              } catch(e){}
+            })()`,
+          }}
+        />
+      </head>
+      <body className="min-h-full flex flex-col selection:bg-indigo-500 selection:text-white">
+        <ThemeClerkProvider>{children}</ThemeClerkProvider>
       </body>
     </html>
   );

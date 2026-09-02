@@ -1,26 +1,304 @@
 @import "tailwindcss";
 
 :root {
-  --background: #ffffff;
-  --foreground: #171717;
+  /* Default: Dark Theme */
+  --bg-page: #060914;
+  --bg-page-gradient: 
+    radial-gradient(circle at 50% 0%, rgba(79, 70, 229, 0.18) 0%, transparent 55%),
+    radial-gradient(circle at 85% 25%, rgba(99, 102, 241, 0.1) 0%, transparent 45%),
+    radial-gradient(circle at 15% 65%, rgba(67, 56, 202, 0.1) 0%, transparent 50%),
+    radial-gradient(circle at 50% 100%, rgba(79, 70, 229, 0.12) 0%, transparent 60%);
+  --text-primary: #f8fafc;
+  --text-secondary: #94a3b8;
+  --text-muted: #64748b;
+  --card-bg: rgba(12, 17, 36, 0.88);
+  --card-border: rgba(99, 102, 241, 0.16);
+  --card-shadow: 0 20px 45px -15px rgba(0, 0, 0, 0.7), inset 0 1px 0 rgba(255, 255, 255, 0.06);
+  --item-bg: rgba(18, 25, 52, 0.65);
+  --item-border: rgba(99, 102, 241, 0.14);
+  --item-hover: rgba(24, 34, 70, 0.82);
+  --control-bg: #090d20;
+  --control-border: rgba(99, 102, 241, 0.3);
+  --control-text: #e2e8f0;
+  --input-bar-bg: rgba(13, 19, 43, 0.9);
+  --input-bar-border: rgba(99, 102, 241, 0.35);
+  --input-bar-shadow: 0 20px 40px -10px rgba(0, 0, 0, 0.6);
+  --timer-track: #171e3d;
 }
 
-@theme inline {
-  --color-background: var(--background);
-  --color-foreground: var(--foreground);
-  --font-sans: var(--font-geist-sans);
-  --font-mono: var(--font-geist-mono);
+html.light {
+  /* Light Theme */
+  --bg-page: #f8fafc;
+  --bg-page-gradient: 
+    radial-gradient(circle at 50% 0%, rgba(99, 102, 241, 0.12) 0%, transparent 60%),
+    radial-gradient(circle at 85% 20%, rgba(147, 197, 253, 0.15) 0%, transparent 40%),
+    radial-gradient(circle at 50% 100%, rgba(99, 102, 241, 0.08) 0%, transparent 60%);
+  --text-primary: #0f172a;
+  --text-secondary: #475569;
+  --text-muted: #94a3b8;
+  --card-bg: #ffffff;
+  --card-border: rgba(99, 102, 241, 0.18);
+  --card-shadow: 0 15px 35px -10px rgba(99, 102, 241, 0.12), 0 4px 6px -2px rgba(0, 0, 0, 0.03);
+  --item-bg: #f8fafc;
+  --item-border: #e2e8f0;
+  --item-hover: #eef2ff;
+  --control-bg: #f1f5f9;
+  --control-border: #cbd5e1;
+  --control-text: #1e293b;
+  --input-bar-bg: #ffffff;
+  --input-bar-border: rgba(99, 102, 241, 0.25);
+  --input-bar-shadow: 0 10px 25px -5px rgba(99, 102, 241, 0.12);
+  --timer-track: #e2e8f0;
 }
 
-@media (prefers-color-scheme: dark) {
-  :root {
-    --background: #0a0a0a;
-    --foreground: #ededed;
-  }
+/* Base Body Styles */
+html {
+  background-color: var(--bg-page);
+  min-height: 100%;
 }
 
 body {
-  background: var(--background);
-  color: var(--foreground);
-  font-family: Arial, Helvetica, sans-serif;
+  background-color: var(--bg-page);
+  background-image: var(--bg-page-gradient);
+  background-attachment: fixed;
+  background-repeat: no-repeat;
+  background-size: cover;
+  color: var(--text-primary);
+  min-height: 100vh;
+  transition: background-color 0.2s ease, color 0.2s ease;
+}
+
+/* Custom Text Classes */
+.text-main {
+  color: var(--text-primary) !important;
+}
+
+.text-sub {
+  color: var(--text-secondary) !important;
+}
+
+.text-dim {
+  color: var(--text-muted) !important;
+}
+
+/* Footer Gradient Text */
+.footer-text-gradient {
+  background: linear-gradient(90deg, #818cf8 0%, #f8fafc 50%, #818cf8 100%);
+  -webkit-background-clip: text;
+  background-clip: text;
+  -webkit-text-fill-color: transparent;
+}
+
+html.light .footer-text-gradient {
+  background: linear-gradient(90deg, #4338ca 0%, #0f172a 50%, #4338ca 100%);
+  -webkit-background-clip: text;
+  background-clip: text;
+  -webkit-text-fill-color: transparent;
+}
+
+/* Inverted Contrast Tooltip: Light in Dark Mode, Dark in Light Mode */
+.tooltip-box {
+  background-color: #ffffff;
+  color: #0f172a;
+  border: 1px solid rgba(99, 102, 241, 0.4);
+  box-shadow: 0 10px 25px -5px rgba(0, 0, 0, 0.4), 0 0 15px rgba(99, 102, 241, 0.2);
+}
+
+.tooltip-subtext {
+  color: #64748b;
+}
+
+.tooltip-arrow {
+  background-color: #ffffff;
+  border-right: 1px solid rgba(99, 102, 241, 0.4);
+  border-bottom: 1px solid rgba(99, 102, 241, 0.4);
+}
+
+/* When in Light Theme -> Dark Tooltip */
+html.light .tooltip-box {
+  background-color: #0f172a;
+  color: #f8fafc;
+  border: 1px solid rgba(99, 102, 241, 0.5);
+  box-shadow: 0 12px 28px -5px rgba(0, 0, 0, 0.45);
+}
+
+html.light .tooltip-subtext {
+  color: #94a3b8;
+}
+
+html.light .tooltip-arrow {
+  background-color: #0f172a;
+  border-right: 1px solid rgba(99, 102, 241, 0.5);
+  border-bottom: 1px solid rgba(99, 102, 241, 0.5);
+}
+
+/* Almost invisible light dark indigo custom scrollbar */
+::-webkit-scrollbar {
+  width: 5px;
+  height: 5px;
+}
+
+::-webkit-scrollbar-track {
+  background: transparent;
+}
+
+::-webkit-scrollbar-thumb {
+  background: rgba(99, 102, 241, 0.2);
+  border-radius: 9999px;
+  transition: background 0.2s ease;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: rgba(99, 102, 241, 0.45);
+}
+
+* {
+  scrollbar-width: thin;
+  scrollbar-color: rgba(99, 102, 241, 0.2) transparent;
+}
+
+/* 3D Indigo Button */
+.btn-3d-indigo {
+  background: linear-gradient(180deg, #4f46e5 0%, #3730a3 100%);
+  box-shadow: 
+    0 4px 0 0 #1e1b4b,
+    0 10px 20px -3px rgba(79, 70, 229, 0.45),
+    inset 0 1px 0 rgba(255, 255, 255, 0.25);
+  border: 1px solid rgba(129, 140, 248, 0.35);
+  transition: all 0.12s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.btn-3d-indigo:hover {
+  filter: brightness(1.08);
+  transform: translateY(-1px);
+  box-shadow: 
+    0 5px 0 0 #1e1b4b,
+    0 12px 24px -3px rgba(79, 70, 229, 0.55),
+    inset 0 1px 0 rgba(255, 255, 255, 0.3);
+}
+
+.btn-3d-indigo:active {
+  transform: translateY(3px);
+  box-shadow: 
+    0 1px 0 0 #1e1b4b,
+    0 4px 10px -2px rgba(79, 70, 229, 0.35),
+    inset 0 2px 4px rgba(0, 0, 0, 0.25);
+}
+
+/* Circular 3D (+) Button */
+.btn-3d-circle {
+  background: linear-gradient(135deg, #6366f1 0%, #4338ca 100%);
+  box-shadow: 
+    0 3px 0 0 #1e1b4b,
+    0 6px 16px rgba(99, 102, 241, 0.5),
+    inset 0 1px 0 rgba(255, 255, 255, 0.35);
+  border: 1px solid rgba(165, 180, 252, 0.3);
+  transition: all 0.12s ease;
+}
+
+.btn-3d-circle:hover {
+  transform: translateY(-1px) scale(1.02);
+  filter: brightness(1.1);
+}
+
+.btn-3d-circle:active {
+  transform: translateY(2px) scale(0.98);
+  box-shadow: 
+    0 1px 0 0 #1e1b4b,
+    0 2px 6px rgba(99, 102, 241, 0.3);
+}
+
+/* Dark/Subtle 3D Button */
+.btn-3d-dark {
+  background: linear-gradient(180deg, #161d3b 0%, #0f142b 100%);
+  box-shadow: 
+    0 3px 0 0 #070a17,
+    0 8px 16px rgba(0, 0, 0, 0.4),
+    inset 0 1px 0 rgba(255, 255, 255, 0.08);
+  border: 1px solid rgba(99, 102, 241, 0.2);
+  color: var(--control-text);
+  transition: all 0.12s ease;
+}
+
+html.light .btn-3d-dark {
+  background: linear-gradient(180deg, #ffffff 0%, #f1f5f9 100%);
+  box-shadow: 
+    0 3px 0 0 #cbd5e1,
+    0 6px 14px rgba(0, 0, 0, 0.06),
+    inset 0 1px 0 rgba(255, 255, 255, 0.8);
+  border: 1px solid #cbd5e1;
+  color: #1e293b;
+}
+
+.btn-3d-dark:hover {
+  filter: brightness(1.08);
+}
+
+.btn-3d-dark:active {
+  transform: translateY(2px);
+}
+
+/* Pills */
+.btn-pill-active {
+  background: linear-gradient(180deg, #3b82f6 0%, #2563eb 100%);
+  box-shadow: 0 2px 0 0 #1d4ed8, 0 4px 10px rgba(37, 99, 235, 0.35);
+  color: #ffffff !important;
+}
+
+.btn-pill-inactive {
+  background: transparent;
+  color: var(--text-secondary);
+}
+
+.btn-pill-inactive:hover {
+  background: rgba(99, 102, 241, 0.1);
+  color: var(--text-primary);
+}
+
+/* Card glass styling */
+.taskpulse-card {
+  background: var(--card-bg);
+  border: 1px solid var(--card-border);
+  box-shadow: var(--card-shadow);
+  backdrop-filter: blur(20px);
+  transition: background-color 0.2s ease, border-color 0.2s ease, box-shadow 0.2s ease;
+}
+
+/* Input Bar Container */
+.input-bar-container {
+  background: var(--input-bar-bg);
+  border: 1px solid var(--input-bar-border);
+  box-shadow: var(--input-bar-shadow);
+  transition: background-color 0.2s ease, border-color 0.2s ease, box-shadow 0.2s ease;
+}
+
+/* Task Item Card */
+.task-item-card {
+  background: var(--item-bg);
+  border: 1px solid var(--item-border);
+  transition: all 0.18s ease;
+}
+
+.task-item-card:hover {
+  background: var(--item-hover);
+  border-color: rgba(99, 102, 241, 0.35);
+  transform: translateY(-1px);
+}
+
+/* Controls (Filters, dropdowns, edit/delete buttons) */
+.control-box {
+  background: var(--control-bg);
+  border: 1px solid var(--control-border);
+  color: var(--control-text);
+  transition: background-color 0.2s ease, border-color 0.2s ease;
+}
+
+/* Timer Background */
+.timer-dot-pattern {
+  background-image: radial-gradient(rgba(99, 102, 241, 0.22) 1px, transparent 1px);
+  background-size: 16px 16px;
+}
+
+html.light .timer-dot-pattern {
+  background-image: radial-gradient(rgba(99, 102, 241, 0.12) 1px, transparent 1px);
 }
